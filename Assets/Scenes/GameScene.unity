@@ -2268,6 +2268,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   ballRb: {fileID: 0}
+  maxSpeed: 100
+  speedIncrement: 0.2
+  gameManager: {fileID: 0}
 --- !u!1 &1515045038
 GameObject:
   m_ObjectHideFlags: 0
