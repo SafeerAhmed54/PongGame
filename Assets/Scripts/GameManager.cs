@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI winnerText;
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private int scoreToWin = 11;
+    [SerializeField] private GameObject player2Object;
+    [SerializeField] private GameObject aiObject;
 
     private int player1Score = 0;
     private int player2Score = 0;
@@ -21,6 +23,17 @@ public class GameManager : MonoBehaviour
         if (gameOverPanel != null)
         {
             gameOverPanel.SetActive(false);
+        }
+       
+        if (GetGameModeInt() == 1) // AI Mode
+        {
+            player2Object.SetActive(false);
+            aiObject.SetActive(true);
+        }
+        else // 1v1 Mode
+        {
+            player2Object.SetActive(true);
+            aiObject.SetActive(false);
         }
 
         // Initialize score text
@@ -87,6 +100,21 @@ public class GameManager : MonoBehaviour
 
         // Reload the current scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    private int GetGameModeInt()
+    {
+        if (PlayerPrefs.HasKey("GameMode"))
+        {
+            int gameMode = PlayerPrefs.GetInt("GameMode", 0);
+            return gameMode;
+        }
+        else
+        {
+            int gameMode = 1;
+            return gameMode;
+        }
+        
     }
 
     public void QuitGame()
