@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using DG.Tweening;
 
 public class BallScript : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class BallScript : MonoBehaviour
     [SerializeField] private float maxSpeed = 15f;
     [SerializeField] private float speedIncrement = 0.1f;
     [SerializeField] private GameManager gameManager;
+    [SerializeField] private TrailRenderer trailRenderer;
 
     private Vector3 lastVelocity;
     private float currentSpeed;
@@ -17,7 +19,7 @@ public class BallScript : MonoBehaviour
         ballRb = GetComponent<Rigidbody2D>();
         gameManager = FindObjectOfType<GameManager>();
         currentSpeed = speed;
-        LaunchBall();
+        StartCoroutine(LaunchBall());
     }
 
     private void Update()
@@ -33,10 +35,12 @@ public class BallScript : MonoBehaviour
             // Apply the new speed while maintaining direction
             ballRb.velocity = ballRb.velocity.normalized * currentSpeed;
         }
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+
         var direction = Vector3.Reflect(lastVelocity.normalized, collision.contacts[0].normal);
 
         // Prevent too flat horizontal trajectories
@@ -69,25 +73,29 @@ public class BallScript : MonoBehaviour
         {
             Debug.Log("Goal 1 Scored");
             gameManager.AddScore(true);
-            ResetBall();
+            trailRenderer.widthCurve = new AnimationCurve(new Keyframe(0, 0), new Keyframe(1, 0));
+            StartCoroutine(ResetBall());
         }
         else if (collision.gameObject.CompareTag("Goal2"))
         {
             Debug.Log("Goal 2 Scored");
             gameManager.AddScore(false);
-            ResetBall();
+            trailRenderer.widthCurve = new AnimationCurve(new Keyframe(0, 0), new Keyframe(1, 0));
+            StartCoroutine(ResetBall());
         }
     }
 
-    public void ResetBall()
+    private IEnumerator ResetBall()
     {
+        yield return new WaitForSeconds(2.0f);
+        trailRenderer.widthCurve = new AnimationCurve(new Keyframe(0, 0.425f), new Keyframe(1, 0));
         transform.position = Vector3.zero; // Or your start position
         currentSpeed = speed; // Reset to initial speed
-        LaunchBall();
     }
 
-    private void LaunchBall()
+    IEnumerator LaunchBall()
     {
+        yield return new WaitForSeconds(1.0f);
         Vector3 direction = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0).normalized;
         ballRb.velocity = direction * currentSpeed;
     }
