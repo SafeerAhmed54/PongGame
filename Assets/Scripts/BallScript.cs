@@ -87,10 +87,20 @@ public class BallScript : MonoBehaviour
 
     private IEnumerator ResetBall()
     {
-        yield return new WaitForSeconds(2.0f);
-        trailRenderer.widthCurve = new AnimationCurve(new Keyframe(0, 0.425f), new Keyframe(1, 0));
+        // Disable the TrailRenderer to clear the trail
+        trailRenderer.enabled = false;
+
+        yield return new WaitForSeconds(3.0f);
+
+        // Reset the ball's position and speed
         transform.position = Vector3.zero; // Or your start position
         currentSpeed = speed; // Reset to initial speed
+
+        // Re-enable the TrailRenderer after resetting
+        trailRenderer.enabled = true;
+
+        // Restore the trail's width curve
+        trailRenderer.widthCurve = new AnimationCurve(new Keyframe(0, 0.425f), new Keyframe(1, 0));
     }
 
     IEnumerator LaunchBall()

@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,9 +14,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int scoreToWin = 11;
     [SerializeField] private GameObject player2Object;
     [SerializeField] private GameObject aiObject;
+    [SerializeField] private GameObject settingsPanel;
 
     private int player1Score = 0;
     private int player2Score = 0;
+    private bool gameStarted = false;
 
     void Start()
     {
@@ -24,7 +27,14 @@ public class GameManager : MonoBehaviour
         {
             gameOverPanel.SetActive(false);
         }
-       
+
+        // Show settings panel at start
+        if (settingsPanel != null)
+        {
+            settingsPanel.SetActive(true);
+        }
+
+        // Set game mode based on player preference
         if (GetGameModeInt() == 1) // AI Mode
         {
             player2Object.SetActive(false);
@@ -40,6 +50,26 @@ public class GameManager : MonoBehaviour
         UpdateScoreUI();
     }
 
+    public void Mainmenu()
+    {
+        // Load the main menu scene
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void StartGame()
+    {
+        // Called when settings are confirmed
+        gameStarted = true;
+
+        // Make sure the game is running at normal speed
+        Time.timeScale = 1;
+    }
+
+    public void SetScoreToWin(int score)
+    {
+        scoreToWin = score;
+    }
+
     public void AddScore(bool isPlayer1)
     {
         if (isPlayer1)
@@ -50,7 +80,6 @@ public class GameManager : MonoBehaviour
         {
             player2Score++;
         }
-
         UpdateScoreUI();
 
         // Check if game is over
@@ -63,7 +92,6 @@ public class GameManager : MonoBehaviour
         {
             player1ScoreText.text = player1Score.ToString();
         }
-
         if (player2ScoreText != null)
         {
             player2ScoreText.text = player2Score.ToString();
@@ -81,7 +109,6 @@ public class GameManager : MonoBehaviour
             if (gameOverPanel != null)
             {
                 gameOverPanel.SetActive(true);
-
                 if (winnerText != null)
                 {
                     winnerText.text = winner + " Wins!";
@@ -114,7 +141,6 @@ public class GameManager : MonoBehaviour
             int gameMode = 1;
             return gameMode;
         }
-        
     }
 
     public void QuitGame()

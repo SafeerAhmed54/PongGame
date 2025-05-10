@@ -11,6 +11,7 @@ TagManager:
   - Goal1
   - Goal2
   - Ball
+  - AudioManager
   layers:
   - Default
   - TransparentFX

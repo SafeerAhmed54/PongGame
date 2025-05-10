@@ -3,118 +3,120 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class LoadingScreen : MonoBehaviour
 {
-    [Header("Loading Settings")]
+    [Header("Scene Settings")]
     [SerializeField] private string sceneToLoad = "GameScene";
-    [SerializeField] private float artificialMinLoadTime = 1.5f; // Minimum time to show loading screen
+    [SerializeField] private float artificialMinLoadTime = 1f;
 
     [Header("UI References")]
-    [SerializeField] private TextMeshProUGUI loadingText;
-    [SerializeField] private TextMeshProUGUI percentageText;
     [SerializeField] private Slider progressSlider;
+    [SerializeField] private TextMeshProUGUI percentageText;
+    [SerializeField] private TextMeshProUGUI loadingText;
 
-    [Header("Animation Settings")]
-    [SerializeField] private float animationSpeed = 0.5f; // Speed of loading text animation
-    [SerializeField] private float progressBarSpeed = 0.5f; // Speed of progress bar movement (lower = slower)
+    [Header("Tween Settings")]
+    [SerializeField] private float sliderTweenDuration = 0.3f;
+    [SerializeField] private float textAnimationInterval = 0.5f;
 
+    private Coroutine loadRoutine;
+    private Tween loadingDotsTween;
     private bool isLoading = false;
-    private float currentProgress = 0f;
-    private float targetProgress = 0f;
-    private float smoothVelocity = 0.0f;
 
     private void OnEnable()
     {
-        // Start loading when this screen is enabled
-        StartCoroutine(LoadSceneAsync());
-        StartCoroutine(AnimateLoadingText());
+        if (!string.IsNullOrEmpty(sceneToLoad))
+        {
+            StartLoading();
+        }
     }
 
-    private IEnumerator LoadSceneAsync()
+    private void OnDisable()
     {
-        if (isLoading)
-            yield break;
+        StopAllCoroutines();
+        loadingDotsTween?.Kill();
+    }
+
+    public void SetSceneToLoad(string sceneName)
+    {
+        sceneToLoad = sceneName;
+    }
+
+    public void StartLoading()
+    {
+        if (isLoading || string.IsNullOrEmpty(sceneToLoad)) return;
 
         isLoading = true;
-
-        // Initialize UI
-        progressSlider.value = 0;
+        progressSlider.value = 0f;
         percentageText.text = "0%";
 
-        // Start loading the scene in background
-        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneToLoad);
+        AnimateLoadingText();
+        loadRoutine = StartCoroutine(LoadSceneCoroutine());
+    }
 
-        // Don't let the scene activate until we allow it
-        asyncOperation.allowSceneActivation = false;
+    private IEnumerator LoadSceneCoroutine()
+    {
+        AsyncOperation async = SceneManager.LoadSceneAsync(sceneToLoad);
+        async.allowSceneActivation = false;
 
-        // Track the elapsed time for artificial minimum load time
-        float elapsedTime = 0f;
+        float elapsed = 0f;
+        float targetProgress = 0f;
 
-        // While the scene loads
-        while (!asyncOperation.isDone)
+        while (async.progress < 0.9f)
         {
-            elapsedTime += Time.deltaTime;
+            elapsed += Time.deltaTime;
+            targetProgress = Mathf.Clamp01(async.progress / 0.9f);
 
-            // Progress goes from 0 to 0.9 when scene is fully loaded
-            // We scale it to go from 0 to 1
-            targetProgress = asyncOperation.progress / 0.9f;
-
-            // Smooth the progress bar (higher value = slower movement)
-            currentProgress = Mathf.SmoothDamp(currentProgress, targetProgress, ref smoothVelocity, progressBarSpeed);
-
-            // Update UI
-            progressSlider.value = currentProgress;
-            percentageText.text = Mathf.RoundToInt(currentProgress * 100) + "%";
-
-            // If scene is loaded AND we've hit our minimum time
-            if (asyncOperation.progress >= 0.9f && elapsedTime >= artificialMinLoadTime)
-            {
-                // Make sure progress is at 100% visually
-                StartCoroutine(FillProgressBarToCompletion());
-
-                // Allow scene to activate
-                asyncOperation.allowSceneActivation = true;
-            }
-
+            UpdateProgressBar(targetProgress);
             yield return null;
         }
 
+        // Wait for artificial minimum time
+        while (elapsed < artificialMinLoadTime)
+        {
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        // Fill to 100% before activating
+        yield return FillToCompletion();
+
+        async.allowSceneActivation = true;
         isLoading = false;
     }
 
-    private IEnumerator FillProgressBarToCompletion()
+    private void UpdateProgressBar(float value)
     {
-        // Smoothly fill progress bar to 100%
-        float finalFillSpeed = 0.3f; // Lower = slower final fill
+        float percent = Mathf.Clamp01(value) * 100f;
+        progressSlider.DOValue(value, sliderTweenDuration);
+        percentageText.text = Mathf.RoundToInt(percent) + "%";
+    }
 
-        while (currentProgress < 1f)
+    private IEnumerator FillToCompletion()
+    {
+        float fill = progressSlider.value;
+        while (fill < 1f)
         {
-            currentProgress = Mathf.MoveTowards(currentProgress, 1f, Time.deltaTime * finalFillSpeed);
-            progressSlider.value = currentProgress;
-            percentageText.text = Mathf.RoundToInt(currentProgress * 100) + "%";
+            fill = Mathf.MoveTowards(fill, 1f, Time.deltaTime);
+            progressSlider.value = fill;
+            percentageText.text = Mathf.RoundToInt(fill * 100f) + "%";
             yield return null;
         }
     }
 
-    private IEnumerator AnimateLoadingText()
+    private void AnimateLoadingText()
     {
-        string[] loadingStates = { "Loading.", "Loading..", "Loading..." };
-        int currentState = 0;
+        string[] loadingDots = { "Loading.", "Loading..", "Loading..." };
+        int index = 0;
 
-        while (isLoading || currentProgress < 1f)
-        {
-            loadingText.text = loadingStates[currentState];
-            currentState = (currentState + 1) % loadingStates.Length;
-
-            yield return new WaitForSeconds(animationSpeed);
-        }
-    }
-
-    // Public method to load a specific scene
-    public void LoadScene(string sceneName)
-    {
-        sceneToLoad = sceneName;
-        StartCoroutine(LoadSceneAsync());
+        loadingDotsTween = DOTween.Sequence()
+            .AppendCallback(() => loadingText.text = loadingDots[index])
+            .AppendInterval(textAnimationInterval)
+            .SetLoops(-1)
+            .OnStepComplete(() =>
+            {
+                index = (index + 1) % loadingDots.Length;
+            });
     }
 }

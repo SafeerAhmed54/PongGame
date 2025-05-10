@@ -9,7 +9,11 @@ public class BoundaryHitScript : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ball"))
         {
-            title.transform.DOPunchScale(Vector3.one * 0.3f, 0.2f, 10, 1);
+            title.transform.DOPunchScale(Vector3.one * 0.1f, 0.5f, 1, 0.5f)
+                .OnComplete(() =>
+                {
+                    title.transform.localScale = Vector3.one;
+                });
         }
     }
 }
