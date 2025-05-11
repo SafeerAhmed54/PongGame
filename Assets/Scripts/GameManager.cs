@@ -7,11 +7,14 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("Game Settings")]
     [SerializeField] private TextMeshProUGUI player1ScoreText;
     [SerializeField] private TextMeshProUGUI player2ScoreText;
     [SerializeField] private TextMeshProUGUI winnerText;
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private int scoreToWin = 11;
+
+    [Header("Game Objects")]
     [SerializeField] private GameObject player2Object;
     [SerializeField] private GameObject aiObject;
     [SerializeField] private GameObject settingsPanel;
@@ -53,7 +56,7 @@ public class GameManager : MonoBehaviour
     public void Mainmenu()
     {
         // Load the main menu scene
-        SceneManager.LoadScene("MainMenu");
+        LoadingScreen.Instance.LoadScene("Mainmenu");
     }
 
     public void StartGame()

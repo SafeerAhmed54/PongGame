@@ -519,17 +519,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3937067743065219678}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1159125906}
+        m_TargetAssemblyTypeName: MainmenuManager, Assembly-CSharp
+        m_MethodName: LoadScene
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
+          m_StringArgument: GameScene
+          m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1093106787}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
@@ -1357,6 +1357,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1093106787}
   m_CullTransparentMesh: 1
+--- !u!1 &1150508254
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1150508256}
+  - component: {fileID: 1150508255}
+  m_Layer: 0
+  m_Name: LoadingManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1150508255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1150508254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a530317e42a4cc949951f3f3c5ab0e4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loadingPanel: {fileID: 3937067743065219678}
+  progressBar: {fileID: 1824354981883252539}
+  percentageText: {fileID: 7063160447654633701}
+  loadingText: {fileID: 6773301733467379670}
+--- !u!4 &1150508256
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1150508254}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.1484368, y: -0.6891546, z: 33.56342}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1159125904
 GameObject:
   m_ObjectHideFlags: 0
@@ -1677,17 +1725,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3937067743065219678}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1159125906}
+        m_TargetAssemblyTypeName: MainmenuManager, Assembly-CSharp
+        m_MethodName: LoadScene
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
+          m_StringArgument: GameScene
+          m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1093106787}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
@@ -2011,7 +2059,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 89.109985, y: -97.11}
+  m_AnchoredPosition: {x: 89.109985, y: -97.109985}
   m_SizeDelta: {x: 127.77, y: 127.77}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1324816132
@@ -3274,25 +3322,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1503192023809299218
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3937067743065219678}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a530317e42a4cc949951f3f3c5ab0e4f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneToLoad: GameScene
-  artificialMinLoadTime: 5
-  progressSlider: {fileID: 1824354981883252539}
-  percentageText: {fileID: 7063160447654633701}
-  loadingText: {fileID: 6773301733467379670}
-  sliderTweenDuration: 0.3
-  textAnimationInterval: 0.5
 --- !u!1 &1600583881102417885
 GameObject:
   m_ObjectHideFlags: 0
@@ -3515,9 +3544,8 @@ GameObject:
   - component: {fileID: 7285787858607576726}
   - component: {fileID: 6198133270286970195}
   - component: {fileID: 2160943881103103308}
-  - component: {fileID: 1503192023809299218}
   m_Layer: 5
-  m_Name: Loading Panel
+  m_Name: LoadingPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4233,6 +4261,7 @@ SceneRoots:
   - {fileID: 1878715234}
   - {fileID: 1168159214}
   - {fileID: 197438232}
-  - {fileID: 1834768215}
   - {fileID: 415961098}
   - {fileID: 1749326135}
+  - {fileID: 1834768215}
+  - {fileID: 1150508256}

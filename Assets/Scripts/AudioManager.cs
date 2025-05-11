@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    public AudioManager Instance { get; private set; }
+    public static AudioManager Instance { get; private set; } // Make Instance static
     [SerializeField] private AudioSource audioSource;
 
     private void Awake()
@@ -10,12 +10,13 @@ public class AudioManager : MonoBehaviour
         // Check if an instance already exists
         if (Instance == null)
         {
-            Debug.Log("AudioManager instance created." + gameObject.name);
+            Debug.Log("AudioManager instance created: " + gameObject.name);
             Instance = this;
             DontDestroyOnLoad(gameObject); // Make this instance persistent across scenes
         }
         else
         {
+            Debug.Log("Duplicate AudioManager destroyed: " + gameObject.name);
             Destroy(gameObject); // Destroy duplicate instance
         }
 

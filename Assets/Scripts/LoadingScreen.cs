@@ -3,120 +3,108 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
-using DG.Tweening;
 
 public class LoadingScreen : MonoBehaviour
 {
-    [Header("Scene Settings")]
-    [SerializeField] private string sceneToLoad = "GameScene";
-    [SerializeField] private float artificialMinLoadTime = 1f;
+    public static LoadingScreen Instance;
 
     [Header("UI References")]
-    [SerializeField] private Slider progressSlider;
-    [SerializeField] private TextMeshProUGUI percentageText;
-    [SerializeField] private TextMeshProUGUI loadingText;
+    public GameObject loadingPanel;
+    public Slider progressBar;
+    public TextMeshProUGUI percentageText;
+    public TextMeshProUGUI loadingText;
 
-    [Header("Tween Settings")]
-    [SerializeField] private float sliderTweenDuration = 0.3f;
-    [SerializeField] private float textAnimationInterval = 0.5f;
-
-    private Coroutine loadRoutine;
-    private Tween loadingDotsTween;
     private bool isLoading = false;
 
-    private void OnEnable()
+    private float dotTimer = 0f;
+    private int dotCount = 0;
+
+    void Awake()
     {
-        if (!string.IsNullOrEmpty(sceneToLoad))
+        // Singleton
+        if (Instance == null)
         {
-            StartLoading();
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+            loadingPanel.SetActive(false);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+        if(loadingPanel == null)
+        {
+            loadingPanel = GameObject.Find("LoadingPanel");
+        }
+        if (progressBar == null)
+        {
+            progressBar = loadingPanel.GetComponentInChildren<Slider>();
+        }
+        if (percentageText == null)
+        {
+            percentageText = loadingPanel.GetComponentInChildren<TextMeshProUGUI>();
+        }
+        if (loadingText == null)
+        {
+            loadingText = loadingPanel.GetComponentInChildren<TextMeshProUGUI>();
         }
     }
 
-    private void OnDisable()
+    public void LoadScene(string sceneName)
     {
-        StopAllCoroutines();
-        loadingDotsTween?.Kill();
+        if (!isLoading)
+        {
+            StartCoroutine(LoadSceneAsync(sceneName));
+        }
     }
 
-    public void SetSceneToLoad(string sceneName)
+    private IEnumerator LoadSceneAsync(string sceneName)
     {
-        sceneToLoad = sceneName;
-    }
-
-    public void StartLoading()
-    {
-        if (isLoading || string.IsNullOrEmpty(sceneToLoad)) return;
-
         isLoading = true;
-        progressSlider.value = 0f;
+        loadingPanel.SetActive(true);
+        progressBar.value = 0;
         percentageText.text = "0%";
+        loadingText.text = "Loading...";
 
-        AnimateLoadingText();
-        loadRoutine = StartCoroutine(LoadSceneCoroutine());
-    }
+        yield return null;
 
-    private IEnumerator LoadSceneCoroutine()
-    {
-        AsyncOperation async = SceneManager.LoadSceneAsync(sceneToLoad);
-        async.allowSceneActivation = false;
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
+        operation.allowSceneActivation = false;
 
-        float elapsed = 0f;
-        float targetProgress = 0f;
-
-        while (async.progress < 0.9f)
+        while (operation.progress < 0.9f)
         {
-            elapsed += Time.deltaTime;
-            targetProgress = Mathf.Clamp01(async.progress / 0.9f);
-
-            UpdateProgressBar(targetProgress);
+            float progress = Mathf.Clamp01(operation.progress / 0.9f);
+            progressBar.value = progress;
+            percentageText.text = Mathf.RoundToInt(progress * 100f) + "%";
             yield return null;
         }
 
-        // Wait for artificial minimum time
-        while (elapsed < artificialMinLoadTime)
+        // Fill to 100%
+        while (progressBar.value < 1f)
         {
-            elapsed += Time.deltaTime;
+            progressBar.value += Time.deltaTime;
+            percentageText.text = Mathf.RoundToInt(progressBar.value * 100f) + "%";
             yield return null;
         }
 
-        // Fill to 100% before activating
-        yield return FillToCompletion();
-
-        async.allowSceneActivation = true;
+        operation.allowSceneActivation = true;
         isLoading = false;
+        loadingPanel.SetActive(false);
     }
 
-    private void UpdateProgressBar(float value)
+    void Update()
     {
-        float percent = Mathf.Clamp01(value) * 100f;
-        progressSlider.DOValue(value, sliderTweenDuration);
-        percentageText.text = Mathf.RoundToInt(percent) + "%";
-    }
-
-    private IEnumerator FillToCompletion()
-    {
-        float fill = progressSlider.value;
-        while (fill < 1f)
+        if (loadingPanel.activeSelf)
         {
-            fill = Mathf.MoveTowards(fill, 1f, Time.deltaTime);
-            progressSlider.value = fill;
-            percentageText.text = Mathf.RoundToInt(fill * 100f) + "%";
-            yield return null;
+            dotTimer += Time.deltaTime;
+            if (dotTimer > 0.5f)
+            {
+                dotCount = (dotCount + 1) % 4;
+                loadingText.text = "Loading" + new string('.', dotCount);
+                dotTimer = 0f;
+            }
         }
     }
 
-    private void AnimateLoadingText()
-    {
-        string[] loadingDots = { "Loading.", "Loading..", "Loading..." };
-        int index = 0;
-
-        loadingDotsTween = DOTween.Sequence()
-            .AppendCallback(() => loadingText.text = loadingDots[index])
-            .AppendInterval(textAnimationInterval)
-            .SetLoops(-1)
-            .OnStepComplete(() =>
-            {
-                index = (index + 1) % loadingDots.Length;
-            });
-    }
 }

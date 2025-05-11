@@ -5318,7 +5318,7 @@ GameObject:
   - component: {fileID: 1410988007}
   - component: {fileID: 1410988009}
   m_Layer: 5
-  m_Name: Loading Panel
+  m_Name: LoadingPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5394,13 +5394,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a530317e42a4cc949951f3f3c5ab0e4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToLoad: Mainmenu
-  artificialMinLoadTime: 5
-  progressSlider: {fileID: 1096304416258640865}
+  loadingPanel: {fileID: 0}
+  progressBar: {fileID: 0}
   percentageText: {fileID: 8386495524858979391}
   loadingText: {fileID: 5447147953314075404}
-  sliderTweenDuration: 0.3
-  textAnimationInterval: 0.5
 --- !u!1 &1429135984
 GameObject:
   m_ObjectHideFlags: 0
@@ -8161,11 +8158,35 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
-        m_CallState: 2
+        m_CallState: 0
       - m_Target: {fileID: 1910230837}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 0
+      - m_Target: {fileID: 1251542389}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: Mainmenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1251542389}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: Mainmenu
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -8799,7 +8820,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0
+  m_FillAmount: 0.01
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -9122,8 +9143,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 157736812161294089}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMin: {x: 0.01, y: 0}
+  m_AnchorMax: {x: 0.01, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}

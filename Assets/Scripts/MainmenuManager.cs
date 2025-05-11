@@ -14,6 +14,12 @@ public class MainmenuManager : MonoBehaviour
         
     }
 
+    public void LoadScene()
+    {
+        LoadingScreen.Instance.LoadScene("GameScene");
+
+    }
+
     public void StartOneVsOneGame()
     {
         PlayerPrefs.SetInt("GameMode", 0); // 0 = 1v1
