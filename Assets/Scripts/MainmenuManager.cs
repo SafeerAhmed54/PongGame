@@ -2,12 +2,10 @@ using UnityEngine;
 
 public class MainmenuManager : MonoBehaviour
 {
-    
     void Start()
     {
-        
-    }
 
+    }
     // Update is called once per frame
     void Update()
     {
@@ -16,8 +14,7 @@ public class MainmenuManager : MonoBehaviour
 
     public void LoadScene()
     {
-        LoadingScreen.Instance.LoadScene("GameScene");
-
+        LoadingScreenManager.Instance.LoadScene("GameScene");
     }
 
     public void StartOneVsOneGame()

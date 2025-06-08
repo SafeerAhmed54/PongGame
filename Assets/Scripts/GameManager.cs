@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
     public void Mainmenu()
     {
         // Load the main menu scene
-        LoadingScreen.Instance.LoadScene("Mainmenu");
+        LoadingScreenManager.Instance.LoadScene(0);
     }
 
     public void StartGame()

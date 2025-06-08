@@ -5394,10 +5394,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a530317e42a4cc949951f3f3c5ab0e4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadingPanel: {fileID: 0}
-  progressBar: {fileID: 0}
-  percentageText: {fileID: 8386495524858979391}
+  loadingSlider: {fileID: 1096304416258640865}
   loadingText: {fileID: 5447147953314075404}
+  percentageText: {fileID: 8386495524858979391}
+  duration: 4
+  easeType: 1
+  targetSceneName: 
 --- !u!1 &1429135984
 GameObject:
   m_ObjectHideFlags: 0
@@ -7454,8 +7456,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -112, y: -80}
-  m_SizeDelta: {x: 207, y: 83.23}
+  m_AnchoredPosition: {x: 0, y: -70.5}
+  m_SizeDelta: {x: 284.94, y: 114.57}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1846440478
 MonoBehaviour:
@@ -7985,10 +7987,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1846440477}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0000076293945, y: 0}
-  m_SizeDelta: {x: 139.81, y: 36.8}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -51.5, y: -20.71}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1965650406
 MonoBehaviour:
@@ -8012,7 +8014,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 5120940934649208145, guid: ccfadf098e7a3b44fb955612b98ac158, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -8082,7 +8084,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1988619318
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8158,7 +8160,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
-        m_CallState: 0
+        m_CallState: 2
       - m_Target: {fileID: 1910230837}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
@@ -8170,27 +8172,15 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 0
-      - m_Target: {fileID: 1251542389}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: Mainmenu
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1251542389}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: Mainmenu
-        m_Mode: 1
+      - m_Target: {fileID: 1410988009}
+        m_TargetAssemblyTypeName: LoadingScreen, Assembly-CSharp
+        m_MethodName: AnimateLoadingScreen
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
