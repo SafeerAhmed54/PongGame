@@ -21,6 +21,20 @@ public class PongMainmenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        switch(true)
+        {
+            case true:
+                playerName.text = "Player 1";
+                playerName2.text = "Player 2";
+                playerName3.text = "Player 3";
+                break;
+            case false:
+                playerName.text = "Player 1";
+                playerName2.text = "Player 2";
+                playerName3.text = "Player 3";
+                break;
+            default:
+                break;
+        }
     }
 }
