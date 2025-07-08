@@ -18,20 +18,23 @@ public class PongMainmenu : MonoBehaviour
         playerName3.text = "Player 3";
     }
 
+    enum PlayerType
+    {
+        Player1,
+        Player2,
+        Player3
+    }
+
     // Update is called once per frame
     void Update()
     {
         switch(true)
         {
             case true:
-                playerName.text = "Player 1";
-                playerName2.text = "Player 2";
-                playerName3.text = "Player 3";
+                PlayerType playerType1 = PlayerType.Player1;
                 break;
             case false:
-                playerName.text = "Player 1";
-                playerName2.text = "Player 2";
-                playerName3.text = "Player 3";
+               PlayerType playerType2 = PlayerType.Player2;
                 break;
             default:
                 break;
