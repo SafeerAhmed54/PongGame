@@ -40,4 +40,17 @@ public class PongMainmenu : MonoBehaviour
                 break;
         }
     }
+
+    public void Move()
+    {
+        decimal speed = 0.5m;
+        if (speed > 0)
+        {
+            Debug.Log("Moving at speed: " + speed);
+        }
+        else
+        {
+            Debug.Log("Speed is zero or negative, not moving.");
+        }
+    }
 }
