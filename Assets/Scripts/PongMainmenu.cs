@@ -9,6 +9,12 @@ public class PongMainmenu : MonoBehaviour
     [SerializeField] private TextMeshProUGUI playerName2;
     [SerializeField] private TextMeshProUGUI playerName3;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    private void Awake()
+    {
+        Debug.Log("Awake called: Initializing PongMainmenu");
+        Debug.Log("Asalam-o-Alikum Safeer here.");
+    }
     void Start()
     {
         score.text = "0";
