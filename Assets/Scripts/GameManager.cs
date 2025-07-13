@@ -106,7 +106,7 @@ public class GameManager : MonoBehaviour
         if (player1Score >= scoreToWin || player2Score >= scoreToWin)
         {
             // Determine winner
-            string winner = player1Score > player2Score ? "Player 1" : "Player 2";
+            string winner = player1Score < player2Score ? "Player 1" : "Player 2";
 
             // Show game over UI
             if (gameOverPanel != null)
