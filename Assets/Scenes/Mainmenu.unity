@@ -129,6 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 415532168}
   - component: {fileID: 415532167}
+  - component: {fileID: 415532169}
   m_Layer: 0
   m_Name: ItemPick
   m_TagString: Untagged
@@ -164,6 +165,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &415532169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 415532166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50c43d7badb2fd54cbe987c018b3dc2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 3627b250d97e99a4abf0decc02cbaaa0, type: 2}
 --- !u!1 &851509361
 GameObject:
   m_ObjectHideFlags: 0

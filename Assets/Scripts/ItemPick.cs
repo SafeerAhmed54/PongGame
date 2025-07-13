@@ -7,5 +7,6 @@ public class ItemPick : MonoBehaviour
     void Start()
     {
         Debug.Log("Picked up: " + data.itemName + ", Damage: " + data.damage);
+        Debug.Log("Picked up: " + data.itemName + ", Damage: " + data.damage);
     }
 }
