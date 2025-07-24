@@ -22,6 +22,11 @@ public class PongMainmenu : MonoBehaviour
         playerName.text = "Player 1";
         playerName2.text = "Player 2";
         playerName3.text = "Player 3";
+
+        Player player1 = new Player("Player 1");
+        Player player2 = new Player("Player 2");
+        Player player3 = new Player("Player 3");
+        player1.UpdateScore(10);
     }
 
     enum PlayerType
@@ -58,5 +63,21 @@ public class PongMainmenu : MonoBehaviour
         {
             Debug.Log("Speed is zero or negative, not moving.");
         }
+    }
+}
+
+public class Player
+{
+    public string Name { get; set; }
+    public int Score { get; set; }
+    public Player(string name)
+    {
+        Name = name;
+        Score = 0;
+    }
+    public void UpdateScore(int points)
+    {
+        Score += points;
+        Debug.Log($"{Name}'s score updated to: {Score}");
     }
 }
