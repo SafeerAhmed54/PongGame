@@ -80,4 +80,9 @@ public class Player
         Score += points;
         Debug.Log($"{Name}'s score updated to: {Score}");
     }
+
+    private void Update()
+    {
+        Debug.Log("Player Update called: " + Name);
+    }
 }
