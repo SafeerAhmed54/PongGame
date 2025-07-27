@@ -85,4 +85,9 @@ public class Player
     {
         Debug.Log("Player Update called: " + Name);
     }
+
+    protected void OnDestroy()
+    {
+        Debug.Log("Player object destroyed: " + Name);
+    }
 }
