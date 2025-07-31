@@ -75,6 +75,13 @@ public class Player
         Name = name;
         Score = 0;
     }
+
+    public Player(string name, int score)
+    {
+        Name = name;
+        Score = score;
+    }
+
     public void UpdateScore(int points)
     {
         Score += points;
