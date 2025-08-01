@@ -82,6 +82,13 @@ public class Player
         Score = score;
     }
 
+    Player(string name, int score, string team)
+    {
+        Name = name;
+        Score = score;
+        Debug.Log($"Player created: {Name}, Score: {Score}, Team: {team}");
+    }
+
     public void UpdateScore(int points)
     {
         Score += points;
@@ -89,7 +96,7 @@ public class Player
     }
 
     private void Update()
-    {
+    {   
         Debug.Log("Player Update called: " + Name);
     }
 
