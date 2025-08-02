@@ -89,6 +89,13 @@ public class Player
         Debug.Log($"Player created: {Name}, Score: {Score}, Team: {team}");
     }
 
+    Player(string name, int score, string team, string position)
+    {
+        Name = name;
+        Score = score;
+        Debug.Log($"Player created: {Name}, Score: {Score}, Team: {team}, Position: {position}");
+    }
+
     public void UpdateScore(int points)
     {
         Score += points;
